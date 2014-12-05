@@ -5,7 +5,7 @@ VAGRANTFILE_API_VERSION = "2"
 vagrant_user = %x(id -un).strip
 vagrant_uid = %x(id -u #{vagrant_user}).strip
 
-ceph_cluster = {
+nodes = {
   controller: {ip: '192.168.1.100'}
 }
 
@@ -16,8 +16,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                       path: "provision-user.sh",
                       args: ["--user", vagrant_user, "--uid", vagrant_uid]
 
-  ceph_cluster.each_key do |nodename|
-    node_data = ceph_cluster[nodename]
+  nodes.each_key do |nodename|
+    node_data = nodes[nodename]
     config.vm.define nodename do |current_node|
       current_node.vm.hostname = nodename
       config.vm.network "private_network", ip: node_data[:ip]
