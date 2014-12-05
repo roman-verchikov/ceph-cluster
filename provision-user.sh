@@ -18,8 +18,10 @@ done
 [ -z $NEW_USER ] && echo 'Missing --user option' && error_exit
 [ -z $NEW_USER_UID ] && echo 'Missing --uid option' && error_exit
 
-echo "Creating user $NEW_USER"
-id -u $NEW_USER &>/dev/null || useradd --groups admin --shell /bin/bash --uid $NEW_USER_UID $NEW_USER
+if ! id -u $NEW_USER &>/dev/null; then
+    echo "Creating user $NEW_USER"
+    useradd --groups admin --shell /bin/bash --uid $NEW_USER_UID $NEW_USER
+fi
 
 NEW_USER_HOMEDIR=$(sudo -H -u $NEW_USER -s eval 'echo $HOME')
 mkdir -pm 700 ${NEW_USER_HOMEDIR}/.ssh
@@ -68,5 +70,3 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 -----END RSA PRIVATE KEY-----
 EOF
 fi
-
-echo 'Done provision!'

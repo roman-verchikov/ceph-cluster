@@ -15,6 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell",
                       path: "provision-user.sh",
                       args: ["--user", vagrant_user, "--uid", vagrant_uid]
+  config.vm.provision "ansible", playbook: "provisioning/playbook.yml", sudo: true
 
   nodes.each_key do |nodename|
     node_data = nodes[nodename]
