@@ -1,0 +1,5 @@
+---
+- hosts: ceph_node*
+  tasks:
+  - name: Add ceph user
+    user: name=cephadmin comment="Account used internally by ceph" groups=admin append=yes

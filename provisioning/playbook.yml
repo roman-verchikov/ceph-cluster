@@ -5,3 +5,10 @@
     apt: name=vim
   - name: Ensure git installed
     apt: name=git
+
+  - name: Ensure ntp installed
+    apt: name=ntp
+    tags: ntp
+  - name: Ensure ntpd is running
+    service: name=ntp state=running enabled=yes
+    tags: ntp
